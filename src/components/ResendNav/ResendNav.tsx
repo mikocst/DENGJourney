@@ -1,25 +1,41 @@
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import {useState} from 'react';
 import NavLinks from './NavLinks';
 import NavContentContainer from './NavContentContainer';
 
-type TabData = { links: string[] };
+type CardData = { layout: string, title: string, description: string, link?: string};
+type Cards = CardData[];
+type TabData = { links: string[], cards: Cards };
 type NavConfig = Record<string, TabData>;
 
 const FeaturesTab: TabData = {
     links: ['Animation', 'Design', 'Development', 'Experience'],
+    cards: [
+        { layout: "card", title: "Animation", description: "Create stunning animations with our tools.", link: "Animation" },
+        { layout: "card", title: "Design", description: "Design beautiful interfaces with our templates.", link: "Templates" },
+    ]
 };
 
 const AgencyTab: TabData = {
     links: ['About', 'Team', 'Careers', 'Contact'],
+    cards: [
+        { layout: "card", title: "About Us", description: "Learn more about our agency and mission.", link: "About" },
+        { layout: "card", title: "Careers", description: "Join our team and build your career with us.", link: "Careers" },
+    ]
 };
 
 const ResourcesTab: TabData = {
     links: ['Blog', 'Case Studies', 'E-books', 'Webinars'],
+    cards: [
+        { layout: "card", title: "Blog", description: "Read our latest articles and insights.", link: "Blog" },
+    ]
 };
 
 const HelpTab: TabData = {
     links: ['Support', 'FAQs', 'Contact'],
+    cards: [
+        { layout: "card", title: "Support", description: "Get help and support for our products.", link: "Support" },
+    ]
 };
 
 const NavDATA : NavConfig = {
@@ -60,14 +76,22 @@ const ResendNav = () => {
                         ></NavLinks>
                     ))}
                     </ul>
+                <AnimatePresence mode='wait'>
                 { activeTab != null && (
-                    <div className = "absolute top-12">
-                        <NavContentContainer
-                        activeTab={activeTab}
-                        links={content?.links}
-                        />
-                    </div>
+                        <motion.div className = "absolute top-12"
+                        initial = {{opacity: 0, y: -10}}
+                        animate = {{opacity: 1, y: 0}}
+                        exit = {{opacity: 0, y: -10}}
+                        transition = {{duration: 0.2}}
+                        >
+                            <NavContentContainer
+                            activeTab={activeTab}
+                            links={content?.links}
+                            cards={content?.cards}
+                            />
+                    </motion.div>
                 )}
+                </AnimatePresence>
             </div>
             <div className = "flex flex-row items-center gap-4">
                 <a className = "cursor-pointer">Login</a>
