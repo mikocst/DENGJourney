@@ -3,36 +3,70 @@ import {useState} from 'react';
 import NavLinks from './NavLinks';
 import NavContentContainer from './NavContentContainer';
 
-const NavMidLink =['Features', 'Agency', 'Resources', 'Help', 'Docs', 'Pricing'];
+type TabData = { links: string[] };
+type NavConfig = Record<string, TabData>;
+
+const FeaturesTab: TabData = {
+    links: ['Animation', 'Design', 'Development', 'Experience'],
+};
+
+const AgencyTab: TabData = {
+    links: ['About Us', 'Our Team', 'Careers', 'Contact'],
+};
+
+const ResourcesTab: TabData = {
+    links: ['Blog', 'Case Studies', 'E-books', 'Webinars'],
+};
+
+const HelpTab: TabData = {
+    links: ['Support Center', 'FAQs', 'Contact Us', 'Live Chat'],
+};
+
+const NavDATA : NavConfig = {
+    Features: FeaturesTab,
+    Agency: AgencyTab,
+    Resources: ResourcesTab,
+    Help: HelpTab,}
 
 const ResendNav = () => {
+   const [activeTab, setActiveTab] = useState<string | null>(null); 
 
-  const [mouseEntering, setMouseEntering] = useState(false);
-  
-  function handleMouseEnter() {
-    setMouseEntering(true);
-    console.log("Mouse Entered");
-  }
+   const handleActiveTab = (tabName: string) => {
+        setActiveTab(tabName);
+        console.log(`Active tab set to: ${tabName}`);
+    }
 
-  function handleMouseLeave() {
-    setMouseEntering(false);
-    console.log("Mouse Left");
-  }
+    const handleMouseLeave = () => {
+        setActiveTab(null);
+        console.log('Active tab cleared');
+    }
+
+    const content = activeTab ? NavDATA[activeTab] : null;
 
   return (
     <header>
         <div className = "flex flex-row items-center justify-between p-2 bg-black/90 text-white relative">
             <h1 className = "font-bold">Logo</h1>
-                <div
-                onMouseEnter={handleMouseEnter} 
+                <div className = "flex flex-row items-center relative"
                 onMouseLeave={handleMouseLeave}
-                className = "flex flex-row items-center relative">
+                >
                     <ul className = "flex flex-row gap-4">
-                        {NavMidLink.map((linkName, index) => (
-                            <NavLinks key={index} id={`nav-link-${linkName}`} name={linkName} />                        
+                    {Object.keys(NavDATA).map((tabName) => (
+                        <NavLinks
+                        id = {tabName}
+                        key={tabName}
+                        name={tabName}
+                        onMouseEnter={() => handleActiveTab(tabName)}
+                        ></NavLinks>
                     ))}
                     </ul>
-                <NavContentContainer/>
+                { activeTab != null && (
+                    <div className = "absolute top-12">
+                        <NavContentContainer
+                        activeTab={activeTab}
+                        />
+                    </div>
+                )}
             </div>
             <div className = "flex flex-row items-center gap-4">
                 <a className = "cursor-pointer">Login</a>

@@ -1,11 +1,14 @@
 
+interface NavContentContainerProps {
+    activeTab: string | null;
+}
 
-const NavContentContainer = () => {
+const NavContentContainer = ({ activeTab }: NavContentContainerProps) => {
   return (
-    <div className = "absolute top-12 background-blur border bg-white/5 border-white/20 flex flex-row gap-4 items-center p-4 rounded-lg">
+    <div className = "pointer-events-none background-blur border bg-white/5 border-white/20 flex flex-row gap-4 items-center p-4 rounded-lg">
         <div className = "flex flex-col gap-2">
             <ul>
-                <li>Animation</li>
+                <li>{activeTab}</li>
                 <li>Design</li>
                 <li>Development</li>
                 <li>Experience</li>

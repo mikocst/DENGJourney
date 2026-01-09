@@ -1,14 +1,23 @@
 import React from 'react'
 
-interface NavLinksProps extends React.HTMLAttributes<HTMLUListElement> {
+interface NavLinksProps {
     id: string;
     name: string;
-
+    activeTab?: string | null
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void; 
 }
 
-const NavLinks = ({id, name, ...props}: NavLinksProps) => {
+const NavLinks = ({id, name, onMouseEnter, onMouseLeave}: NavLinksProps) => {
   return (
-        <li className = "cursor-pointer text-white/70" id={id}>{name}</li>
+        <li
+        className = "cursor-pointer text-white/70 hover:text-white"
+        id={id}
+        onMouseEnter= {onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        >
+            {name}
+        </li>
   )
 }
 
