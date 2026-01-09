@@ -4,6 +4,7 @@ interface NavLinksProps {
     id: string;
     name: string;
     activeTab?: string | null
+    
     onMouseEnter?: () => void;
     onMouseLeave?: () => void; 
 }

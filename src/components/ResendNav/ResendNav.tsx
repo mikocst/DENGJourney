@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import {useState} from 'react';
 import NavLinks from './NavLinks';
 import NavContentContainer from './NavContentContainer';
+import { filter } from 'motion/react-client';
 
 type CardData = { layout: string, title: string, description: string, link?: string};
 type Cards = CardData[];
@@ -46,10 +47,40 @@ const NavDATA : NavConfig = {
 
 const ResendNav = () => {
    const [activeTab, setActiveTab] = useState<string | null>(null); 
+   const [direction, setDirection] = useState<number>(0);
+   const [prevIndex, setPrevIndex] = useState<number>(-1);
 
-   const handleActiveTab = (tabName: string) => {
+    const tabVariants = {
+        left: (direction: number) => {
+            return {
+                x: direction > 0 ? 50 : -50,
+                opacity: 0,
+                filter: "blur(5px)"
+            }
+        },
+        center: (direction: number) => {
+            return {
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)"
+            }
+        },
+        right: (direction: number) => {
+            return {
+                x: direction < 0 ? 50 :-50,
+                opacity: 0,
+                filter: "blur(5px)"
+            }
+        }
+    }
+
+    const handleTabAnimation = (index: number, tabName: string) => {
+        if (prevIndex !== -1) {
+            const newDirection = index > prevIndex ? 1 : -1;
+            setDirection(newDirection);
+        }
+        setPrevIndex(index);
         setActiveTab(tabName);
-        console.log(`Active tab set to: ${tabName}`);
     }
 
     const handleMouseLeave = () => {
@@ -61,18 +92,18 @@ const ResendNav = () => {
 
   return (
     <header>
-        <div className = "flex flex-row items-center justify-between p-2 bg-black/90 text-white relative">
+        <div className = "flex flex-row items-center justify-between bg-black/90 text-white relative">
             <h1 className = "font-bold">Logo</h1>
-                <div className = "flex flex-row items-center relative"
+                <div className = "flex flex-row items-center relative p-3"
                 onMouseLeave={handleMouseLeave}
                 >
                     <ul className = "flex flex-row gap-4">
-                    {Object.keys(NavDATA).map((tabName) => (
+                    {Object.keys(NavDATA).map((tabName, index) => (
                         <NavLinks
                         id = {tabName}
                         key={tabName}
                         name={tabName}
-                        onMouseEnter={() => handleActiveTab(tabName)}
+                        onMouseEnter={() => handleTabAnimation(index, tabName)}
                         ></NavLinks>
                     ))}
                     </ul>
@@ -84,11 +115,13 @@ const ResendNav = () => {
                         exit = {{opacity: 0, y: -10}}
                         transition = {{duration: 0.2}}
                         >
-                            <NavContentContainer
-                            activeTab={activeTab}
-                            links={content?.links}
-                            cards={content?.cards}
-                            />
+                                <NavContentContainer
+                                activeTab={activeTab}
+                                direction={direction}
+                                variants={tabVariants}
+                                links={content?.links}
+                                cards={content?.cards}
+                                />
                     </motion.div>
                 )}
                 </AnimatePresence>
