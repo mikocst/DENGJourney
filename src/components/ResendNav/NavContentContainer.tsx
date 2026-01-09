@@ -1,17 +1,17 @@
 
 interface NavContentContainerProps {
     activeTab: string | null;
+    links?: string[] | null;
 }
 
-const NavContentContainer = ({ activeTab }: NavContentContainerProps) => {
+const NavContentContainer = ({ activeTab, links }: NavContentContainerProps) => {
   return (
     <div className = "pointer-events-none background-blur border bg-white/5 border-white/20 flex flex-row gap-4 items-center p-4 rounded-lg">
         <div className = "flex flex-col gap-2">
             <ul>
-                <li>{activeTab}</li>
-                <li>Design</li>
-                <li>Development</li>
-                <li>Experience</li>
+                {links?.map((link,) => (
+                    <li key = {link}>{link}</li>
+                ))}
             </ul>
         </div>
         <div className = "flex flex-col gap-2">

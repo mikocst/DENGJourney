@@ -11,7 +11,7 @@ const FeaturesTab: TabData = {
 };
 
 const AgencyTab: TabData = {
-    links: ['About Us', 'Our Team', 'Careers', 'Contact'],
+    links: ['About', 'Team', 'Careers', 'Contact'],
 };
 
 const ResourcesTab: TabData = {
@@ -19,7 +19,7 @@ const ResourcesTab: TabData = {
 };
 
 const HelpTab: TabData = {
-    links: ['Support Center', 'FAQs', 'Contact Us', 'Live Chat'],
+    links: ['Support', 'FAQs', 'Contact'],
 };
 
 const NavDATA : NavConfig = {
@@ -64,6 +64,7 @@ const ResendNav = () => {
                     <div className = "absolute top-12">
                         <NavContentContainer
                         activeTab={activeTab}
+                        links={content?.links}
                         />
                     </div>
                 )}
