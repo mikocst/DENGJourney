@@ -1,39 +1,32 @@
 import { color, motion } from 'motion/react'
-import {useState} from 'react'
 
-const variants = {
-    hovering: (isHovering: boolean) => {
-      return {
-        opacity: isHovering === true ? 0.7 : 1
-      }
-    }
+const textVariants = {
+    base: {opacity: 1},
+    active: {opacity: 0.7}
   }
+
+const buttonVariants = {
+    base: {opacity: 1, scale: .97},
+    active: {opacity: 0.7, scale: 1.05}
+}
 
 const Banner = () => {
-  const [isHovering, setIsHovering] = useState<boolean>(false);
-
-  const handleHoverIn = () => {
-    setIsHovering(true)
-  }
-
-  const handleHoverOut = () => {
-    setIsHovering(false)
-  }
 
   return (
     <motion.div
-    onMouseEnter={handleHoverIn}
-    onMouseLeave={handleHoverOut}
-    className = "bg-white/15 px-4 py-2 rounded-lg text-white cursor-pointer font-medium flex flex-row justify-center items-center gap-4"
+    whileHover={"active"}
+    className = "bg-white/15 px-4 py-2 rounded-lg text-white cursor-pointer font-medium flex flex-row justify-center items-center gap-4 border border-white/10 shadow-lg shadow-white/10"
     >
         <motion.p
-        custom={isHovering}
-        variants={variants}
-        animate = "hovering"
+        variants={textVariants}
         >
           This is a banner with some text.
         </motion.p>
-        <button className = "py-1 px-2 bg-white/20 rounded-lg border border-white cursor-pointer font-semibold">Join Newsletter</button>
+        <motion.button
+         variants = {buttonVariants}
+         className = "py-1 px-2 bg-white/20 rounded-lg border border-white cursor-pointer font-semibold">
+          Join Newsletter
+        </motion.button>
     </motion.div>
   )
 }
