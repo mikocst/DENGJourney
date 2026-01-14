@@ -25,7 +25,7 @@ const NavContentContainer = ({ activeTab, links, cards, direction, variants }: N
                     initial="left" 
                     animate="center"
                     exit="right"
-                    transition={{ ease: "easeInOut", duration: 0.3 }}
+                    transition={{ ease: "easeOut", duration: 0.2 }}
                     className = "flex flex-row gap-8 w-[70%]"
                 >
                     <div className = "flex flex-col gap-2">
