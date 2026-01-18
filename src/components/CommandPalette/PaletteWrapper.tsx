@@ -1,4 +1,4 @@
-
+import PaletteContent from "./PaletteContent"
 
 const PaletteWrapper = () => {
   return (
@@ -7,7 +7,10 @@ const PaletteWrapper = () => {
             <div className ="w-6 h-6 bg-gray-300 rounded-lg absolute top-3 left-2"></div>
             <input
             placeholder='Search for apps and commands'
-            className = "bg-white rounded-md w-full px-9 py-3"
+            className = "bg-white rounded-t-lg w-full px-9 py-3 border-b border-gray-200"
+            />
+            <PaletteContent
+            
             />
         </div>
     </div>
