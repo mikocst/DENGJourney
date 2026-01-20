@@ -24,10 +24,11 @@ const prevIndexRef = useRef(0);
 
 const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
 prevIndexRef.current = index;
+const finalDirection = isFiltering ? 'instant' : direction;
 
 const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
   setIndex(0);
-  setIsFiltering(true)
+  setIsFiltering(true);
   setInput(e.currentTarget.value)
 }
 
