@@ -1,24 +1,43 @@
-import React from 'react'
+import { useContext } from 'react';
 import PaletteItem from './PaletteItem'
+import PaletteImgs from './PaletteImgs'
 
-const testItems = ['Notion', 'Linear', 'Claude', 'Gmail']
+const firstItem = "Notion";
+const secondItem = "Linear";
+const thirdItem = "Claude";
+const fourthItem = "Gmail";
+
+interface PaletteContextProps {
+
+}
 
 const PaletteContent = () => {
   return (
-    <div className = "w-full bg-white p-4 flex flex-row">
-        <div>
-           {testItems.map((item, number) => {
-              return(
-                <div>
-                    <PaletteItem
-                    id = {item}
-                    key = {item}
-                    index = {number}
-                    itemName={item}
-                    />
-                </div>
-              )
-           })}
+    <div className = "w-full bg-white p-4 flex flex-row gap-2">
+        <div className = "w-full flex flex-col gap-2">
+           <PaletteItem
+            id =  {firstItem}
+            index = {0}
+            itemName={firstItem}
+            />
+            <PaletteItem
+            id =  {secondItem}
+            index = {0}
+            itemName={secondItem}
+            />
+            <PaletteItem
+            id =  {thirdItem}
+            index = {0}
+            itemName={thirdItem}
+            />
+            <PaletteItem
+            id =  {fourthItem}
+            index = {0}
+            itemName={fourthItem}
+            />
+        </div>
+        <div className = "flex justify-center items-center w-full">
+          <PaletteImgs/>
         </div>
     </div>
   )

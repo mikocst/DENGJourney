@@ -20,9 +20,9 @@ const PaletteItem = ({id,itemName, index,ref}: PaletteItemProps) => {
     id = {itemId}
     data-index = {index}
     aria-posinset = {position}
-    className = "cursor-pointer py-2 w-full"
+    className = "cursor-pointer p-2 w-full hover:bg-gray-200/30 rounded-sm"
     >
-        <p>{itemName}</p>
+        <p className = "text-sm text-gray-600">{itemName}</p>
     </div>
   )
 }
