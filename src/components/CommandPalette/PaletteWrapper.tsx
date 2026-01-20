@@ -1,12 +1,11 @@
 import PaletteContent from "./PaletteContent"
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo, useState, useRef } from 'react';
 
 interface PaletteContextProps {
   activeIndex: number;
   index: number;
-  setIndex: number | null;
+  setIndex: (n:number) => void;
   direction: string;
-  setDirection: "up" | "down" | null
   itemHeight: number;
   filteredItems: string[];
 }
@@ -19,12 +18,16 @@ interface PalettteWrapperProps {
 const PaletteWrapper = ({ itemHeight}: PalettteWrapperProps) => {
 
 const [input, setInput] = useState<string | null>(null);
-const [index, setIndex] = useState<number | null>(null);
-const [direciton, setDirection] = useState<"up" | "down" | null>(null);
+const [index, setIndex] = useState<number>(0);
+const [isFiltering, setIsFiltering] = useState<boolean>(false)
+const prevIndexRef = useRef(0);
 
+const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
+prevIndexRef.current = index;
 
 const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
   setIndex(0);
+  setIsFiltering(true)
   setInput(e.currentTarget.value)
 }
 
@@ -39,7 +42,6 @@ const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
             className = "bg-white rounded-t-lg w-full px-9 py-3 border-b border-gray-200"
             />
             <PaletteContent
-            
             />
         </div>
     </div>

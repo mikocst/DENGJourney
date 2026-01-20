@@ -17,17 +17,17 @@ const PaletteContent = () => {
             />
             <PaletteItem
             id =  {secondItem}
-            index = {0}
+            index = {1}
             itemName={secondItem}
             />
             <PaletteItem
             id =  {thirdItem}
-            index = {0}
+            index = {2}
             itemName={thirdItem}
             />
             <PaletteItem
             id =  {fourthItem}
-            index = {0}
+            index = {3}
             itemName={fourthItem}
             />
         </div>
