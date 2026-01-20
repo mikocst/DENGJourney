@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import PaletteItem from './PaletteItem'
 import PaletteImgs from './PaletteImgs'
 
@@ -6,10 +5,6 @@ const firstItem = "Notion";
 const secondItem = "Linear";
 const thirdItem = "Claude";
 const fourthItem = "Gmail";
-
-interface PaletteContextProps {
-
-}
 
 const PaletteContent = () => {
   return (
