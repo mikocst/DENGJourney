@@ -1,5 +1,5 @@
 import PaletteContent from "./PaletteContent"
-import { useContext, useMemo, useState, useRef } from 'react';
+import { createContext, useState, useRef, useMemo } from 'react';
 
 interface PaletteContextProps {
   activeIndex: number;
@@ -15,6 +15,8 @@ interface PalettteWrapperProps {
   filteredItems: string[];
 }
 
+const PaletteContext = createContext<PaletteContextProps | null>(null);
+
 const PaletteWrapper = ({ itemHeight}: PalettteWrapperProps) => {
 
 const [input, setInput] = useState<string | null>(null);
@@ -23,8 +25,18 @@ const [isFiltering, setIsFiltering] = useState<boolean>(false)
 const prevIndexRef = useRef(0);
 
 const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
-prevIndexRef.current = index;
 const finalDirection = isFiltering ? 'instant' : direction;
+
+const contextValue = useMemo(() => {
+  return {
+    activeIndex: index,
+    index: index,
+    setIndex: setIndex,
+    direction: finalDirection || 'none',
+    itemHeight: itemHeight,
+    filteredItems: []
+  }
+}, [index, finalDirection, itemHeight])
 
 const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
   setIndex(0);
@@ -42,8 +54,12 @@ const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
             placeholder='Search for apps and commands'
             className = "bg-white rounded-t-lg w-full px-9 py-3 border-b border-gray-200"
             />
-            <PaletteContent
-            />
+            <PaletteContext.Provider value = {
+              contextValue
+            }>
+                <PaletteContent
+              />
+            </PaletteContext.Provider>
         </div>
     </div>
   )
