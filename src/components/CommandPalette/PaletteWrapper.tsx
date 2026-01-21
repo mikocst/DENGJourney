@@ -27,7 +27,7 @@ const filtered = useMemo(() => {
 
 const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
 const finalDirection = isFiltering ? 'instant' : direction;
-prevIndexRef.current = index;
+
 
 const contextValue = useMemo(() => {
   return {
