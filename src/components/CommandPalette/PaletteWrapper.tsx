@@ -5,6 +5,7 @@ interface PaletteContextProps {
   activeIndex: number;
   index: number;
   setIndex: (n:number) => void;
+  isFiltering: boolean;
   direction: string;
   itemHeight: number;
   filteredItems: string[];
@@ -34,6 +35,7 @@ const contextValue = useMemo(() => {
     index: index,
     setIndex: setIndex,
     direction: finalDirection || 'none',
+    isFiltering: isFiltering,
     itemHeight: itemHeight,
     filteredItems: filteredItems
   }
@@ -60,7 +62,7 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     setIsFiltering(false)
 
-    if (index < filteredItems.length) {
+    if (index < filteredItems.length - 1) {
       setIndex(prev => prev + 1);
     }
   }
