@@ -1,5 +1,3 @@
-import React, { useId } from 'react'
-
 interface PaletteItemProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
     itemName: string;
@@ -9,19 +7,18 @@ interface PaletteItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const PaletteItem = ({id,itemName, index, isSelected}: PaletteItemProps) => {
 
-  const generatedId = useId();
-  const itemId = id || generatedId
+  const itemId = id || itemName
   const position = index + 1;
 
   return (
     <div
-    key={itemId}
     id = {itemId}
     data-index = {index}
     aria-posinset = {position}
-    className = "cursor-pointer p-2 w-full hover:bg-gray-200/30 rounded-sm"
+    className = {`cursor-pointer p-2 w-full rounded-sm transition-colors duration-150 ${isSelected ? 'bg-blue-100/50' : 'hover:bg-gray-200/30'}`}
     >
-        <p className = "text-sm text-gray-600">{itemName}</p>
+        <p className = {`text-sm ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-600'}`}>
+          {itemName}</p>
     </div>
   )
 }

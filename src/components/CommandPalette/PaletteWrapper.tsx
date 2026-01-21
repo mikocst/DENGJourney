@@ -1,29 +1,28 @@
 import PaletteContent from "./PaletteContent"
 import { createContext, useState, useRef, useMemo } from 'react';
+import { PaletteContext } from "./PaletteContext";
 
-interface PaletteContextProps {
-  activeIndex: number;
-  index: number;
-  setIndex: (n:number) => void;
-  isFiltering: boolean;
-  direction: string;
-  itemHeight: number;
-  filteredItems: string[];
-}
+
 
 interface PalettteWrapperProps {
-  itemHeight: number;
   filteredItems: string[];
 }
 
-export const PaletteContext = createContext<PaletteContextProps | null>(null);
 
-const PaletteWrapper = ({ itemHeight, filteredItems}: PalettteWrapperProps) => {
 
-const [input, setInput] = useState<string | null>(null);
+const PaletteWrapper = ({ filteredItems}: PalettteWrapperProps) => {
+
+const [input, setInput] = useState<string>('');
 const [index, setIndex] = useState<number>(0);
 const [isFiltering, setIsFiltering] = useState<boolean>(false)
 const prevIndexRef = useRef(0);
+
+const filtered = useMemo(() => {
+  if (!input.trim()) return filteredItems;
+  return filteredItems.filter(item => 
+    item.toLowerCase().includes(input.toLowerCase())
+  );
+}, [input, filteredItems]);
 
 const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
 const finalDirection = isFiltering ? 'instant' : direction;
@@ -36,10 +35,9 @@ const contextValue = useMemo(() => {
     setIndex: setIndex,
     direction: finalDirection || 'none',
     isFiltering: isFiltering,
-    itemHeight: itemHeight,
-    filteredItems: filteredItems
+    filteredItems: filtered
   }
-}, [index, finalDirection, itemHeight])
+}, [index, finalDirection, isFiltering, filteredItems, filtered])
 
 const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
   setIndex(0);
@@ -70,23 +68,24 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
 
 
   return (
+    <PaletteContext.Provider value = {
+              contextValue
+            }>
     <div className ="flex flex-col w-full">
         <div className = "w-full relative">
             <div className ="w-6 h-6 bg-gray-300 rounded-lg absolute top-3 left-2"></div>
             <input
+            value={input}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
             placeholder='Search for apps and commands'
             className = "bg-white rounded-t-lg w-full px-9 py-3 border-b border-gray-200"
             />
-            <PaletteContext.Provider value = {
-              contextValue
-            }>
                 <PaletteContent
               />
-            </PaletteContext.Provider>
         </div>
     </div>
+    </PaletteContext.Provider>
   )
 }
 

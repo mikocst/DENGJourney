@@ -1,9 +1,10 @@
 ---
-import ResendNav from "./ResendNav/ResendNav.tsx";
-import Banner from "./ArcadeBadge/Banner.tsx";
 import PaletteWrapper from "./CommandPalette/PaletteWrapper";
 ---
 
-<div class = "bg-black/90 flex flex-center justify-center w-2xl">
-	<PaletteWrapper client:load/>
+<div class = "bg-black/90 flex justify-center w-2xl">
+	<PaletteWrapper 
+	client:only = "react"
+	filteredItems = {["Notion", "Linear", "Claude", "Gmail", "Slack"]}
+	/>
 </div>
