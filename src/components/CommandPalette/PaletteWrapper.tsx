@@ -16,7 +16,7 @@ interface PalettteWrapperProps {
   filteredItems: string[];
 }
 
-const PaletteContext = createContext<PaletteContextProps | null>(null);
+export const PaletteContext = createContext<PaletteContextProps | null>(null);
 
 const PaletteWrapper = ({ itemHeight, filteredItems}: PalettteWrapperProps) => {
 

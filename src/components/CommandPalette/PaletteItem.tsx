@@ -4,9 +4,10 @@ interface PaletteItemProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
     itemName: string;
     index: number; 
+    isSelected: boolean;
 }
 
-const PaletteItem = ({id,itemName, index}: PaletteItemProps) => {
+const PaletteItem = ({id,itemName, index, isSelected}: PaletteItemProps) => {
 
   const generatedId = useId();
   const itemId = id || generatedId
