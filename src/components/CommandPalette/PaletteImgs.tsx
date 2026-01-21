@@ -24,8 +24,7 @@ const PaletteImgs = () => {
             key={item}
             animate={{ 
               filter: isActive ? "blur(0px)" : "blur(6px)",
-              opacity: isActive ? 1 : 0.3,
-              scale: isActive ? 1 : 0.98
+              opacity: isActive ? 1 : 0.4,
             }}
             transition={{
               duration: context.direction === 'instant' ? 0 : 0.3,
