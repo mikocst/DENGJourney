@@ -1,16 +1,17 @@
 import PaletteContent from "./PaletteContent"
-import { createContext, useState, useRef, useMemo } from 'react';
-import { PaletteContext } from "./PaletteContext";
+import { useState, useRef, useMemo } from 'react';
+import { PaletteContext, type Dictionary } from "./PaletteContext";
 
 
 
 interface PalettteWrapperProps {
   filteredItems: string[];
+  manifest: Dictionary<string>;
 }
 
 
 
-const PaletteWrapper = ({ filteredItems}: PalettteWrapperProps) => {
+const Palette = ({ manifest,filteredItems}: PalettteWrapperProps) => {
 
 const [input, setInput] = useState<string>('');
 const [index, setIndex] = useState<number>(0);
@@ -35,7 +36,8 @@ const contextValue = useMemo(() => {
     setIndex: setIndex,
     direction: finalDirection || 'none',
     isFiltering: isFiltering,
-    filteredItems: filtered
+    filteredItems: filtered,
+    manifest: manifest
   }
 }, [index, finalDirection, isFiltering, filteredItems, filtered])
 
@@ -46,7 +48,6 @@ const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
 }
 
 const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
-  console.log(e.key)
   if(e.key === "ArrowUp") {
     e.preventDefault();
     setIsFiltering(false);
@@ -65,7 +66,6 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
     }
   }
 }
-
 
   return (
     <PaletteContext.Provider value = {
@@ -89,4 +89,4 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
   )
 }
 
-export default PaletteWrapper
+export default Palette
