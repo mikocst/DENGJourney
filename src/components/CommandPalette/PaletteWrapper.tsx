@@ -17,7 +17,7 @@ interface PalettteWrapperProps {
 
 const PaletteContext = createContext<PaletteContextProps | null>(null);
 
-const PaletteWrapper = ({ itemHeight}: PalettteWrapperProps) => {
+const PaletteWrapper = ({ itemHeight, filteredItems}: PalettteWrapperProps) => {
 
 const [input, setInput] = useState<string | null>(null);
 const [index, setIndex] = useState<number>(0);
@@ -26,6 +26,7 @@ const prevIndexRef = useRef(0);
 
 const direction = index === prevIndexRef.current ? null : (index > prevIndexRef.current ? 'down': 'up');
 const finalDirection = isFiltering ? 'instant' : direction;
+prevIndexRef.current = index;
 
 const contextValue = useMemo(() => {
   return {
@@ -34,7 +35,7 @@ const contextValue = useMemo(() => {
     setIndex: setIndex,
     direction: finalDirection || 'none',
     itemHeight: itemHeight,
-    filteredItems: []
+    filteredItems: filteredItems
   }
 }, [index, finalDirection, itemHeight])
 
@@ -44,6 +45,27 @@ const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
   setInput(e.currentTarget.value)
 }
 
+const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
+  console.log(e.key)
+  if(e.key === "ArrowUp") {
+    e.preventDefault();
+    setIsFiltering(false);
+    
+    if(index > 0) {
+      setIndex(prev => prev - 1);
+    }
+  }
+
+  if(e.key === "ArrowDown") {
+    e.preventDefault();
+    setIsFiltering(false)
+
+    if (index < filteredItems.length) {
+      setIndex(prev => prev + 1);
+    }
+  }
+}
+
 
   return (
     <div className ="flex flex-col w-full">
@@ -51,6 +73,7 @@ const handleInput = (e:React.ChangeEvent<HTMLInputElement>) => {
             <div className ="w-6 h-6 bg-gray-300 rounded-lg absolute top-3 left-2"></div>
             <input
             onChange={handleInput}
+            onKeyDown={handleKeyDown}
             placeholder='Search for apps and commands'
             className = "bg-white rounded-t-lg w-full px-9 py-3 border-b border-gray-200"
             />
