@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { PaletteContext } from "./PaletteContext"
+
 interface PaletteItemProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
     itemName: string;
@@ -6,6 +9,8 @@ interface PaletteItemProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const PaletteItem = ({id,itemName, index, isSelected}: PaletteItemProps) => {
+  const context = useContext(PaletteContext);
+  if (!context) return null;
 
   const itemId = id || itemName
   const position = index + 1;
@@ -15,9 +20,10 @@ const PaletteItem = ({id,itemName, index, isSelected}: PaletteItemProps) => {
     id = {itemId}
     data-index = {index}
     aria-posinset = {position}
+    onMouseEnter = {() => context.setIndex(index)}
     className = {`cursor-pointer p-2 w-full rounded-sm transition-colors duration-150 ${isSelected ? 'bg-blue-100/50' : 'hover:bg-gray-200/30'}`}
     >
-        <p className = {`text-sm ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-600'}`}>
+        <p className = {`t  ext-sm ${isSelected ? 'text-blue-600 font-medium' : 'text-gray-600'}`}>
           {itemName}</p>
     </div>
   )
