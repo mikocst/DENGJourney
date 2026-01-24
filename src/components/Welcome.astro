@@ -1,10 +1,21 @@
 ---
 import Palette from "./CommandPalette/PaletteWrapper";
+
+const images = {
+	Notion: "/notion.png",
+	Linear: "/linear.png",
+	Claude: "/claude.png",
+	Gmail: "/gmail.png",
+	Slack: "/slack.png",
+}
+
+const items = ["Notion", "Linear", "Claude", "Gmail", "Slack"]
 ---
 
 <div class = "bg-black/90 flex justify-center w-2xl">
 	<Palette 
 	client:only = "react"
-	filteredItems = {["Notion", "Linear", "Claude", "Gmail", "Slack"]}
+	filteredItems = {items}
+	manifest={images}
 	/>
 </div>

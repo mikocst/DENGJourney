@@ -18,6 +18,7 @@ const PaletteImgs = () => {
         >
          {context?.filteredItems.map((item, index) => {
           const isActive = index === context.activeIndex;
+          const imgSrc = context.manifest?.[item];
 
           return(
             <motion.div
@@ -30,9 +31,17 @@ const PaletteImgs = () => {
               duration: context.direction === 'instant' ? 0 : 0.3,
               ease: [0.2, 0, 0, 1]
             }}
-            className="h-44 bg-red-300 rounded-md shrink-0 mb-4 flex items-center justify-center overflow-hidden"
+            className="h-44 rounded-md shrink-0 mb-4 flex items-center justify-center overflow-hidden"
             >
-
+              {imgSrc ? (
+                <img 
+                  src={imgSrc} 
+                  alt={item} 
+                  className="max-w-full max-h-full object-contain drop-shadow-xl" 
+                />
+              ) : (
+                <span className="text-gray-400 font-mono text-xs">{item}</span>
+              )}
             </motion.div>
           )
           
