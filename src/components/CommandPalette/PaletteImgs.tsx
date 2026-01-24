@@ -7,7 +7,7 @@ const PaletteImgs = () => {
   if (!context) return null;
 
   return (
-    <div className = "flex flex-col w-full h-48 rounded-lg bg-gray-100 p-2 overflow-y-hidden relative">
+    <div className = "flex flex-col w-full h-48 rounded-lg  p-2 overflow-y-hidden relative">
         <motion.div
         initial = {{y: 0}}
         animate= {{y: `${-(context.activeIndex * 192)}px`}}
@@ -37,7 +37,7 @@ const PaletteImgs = () => {
                 <img 
                   src={imgSrc} 
                   alt={item} 
-                  className="max-w-full max-h-full object-contain drop-shadow-xl" 
+                  className="max-w-full max-h-full object-contain drop-shadow-xl rounded-md" 
                 />
               ) : (
                 <span className="text-gray-400 font-mono text-xs">{item}</span>
