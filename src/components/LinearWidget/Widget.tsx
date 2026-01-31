@@ -6,7 +6,7 @@ const Widget = () => {
     const [isClosed, setIsClosed] = useState(false)
 
   return (
-    <div className = "bg-gray-200 w-64 px-4 py-8 rounded-md border border-gray-300">
+    <div className = "bg-gray-200/50 w-sm px-2 py-4 rounded-md border border-gray-300 h-auto">
         <WidgetClosed/>
     </div>
   )
