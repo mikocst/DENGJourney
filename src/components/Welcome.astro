@@ -1,5 +1,6 @@
 ---
 import Palette from "./CommandPalette/PaletteWrapper";
+import Widget from "./LinearWidget/Widget";
 
 const images = {
 	Notion: "/notion.png",
@@ -12,10 +13,6 @@ const images = {
 const items = ["Notion", "Linear", "Claude", "Gmail", "Slack"]
 ---
 
-<div class = "bg-black/90 flex justify-center w-2xl">
-	<Palette 
-	client:only = "react"
-	filteredItems = {items}
-	manifest={images}
-	/>
+<div class = "flex justify-center w-2xl">
+	<Widget/>
 </div>
