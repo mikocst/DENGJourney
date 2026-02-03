@@ -1,16 +1,13 @@
-import { Circle, ChartNoAxesColumnIncreasing, Box } from "lucide-react"
+import { ChartNoAxesColumnIncreasing, Box } from "lucide-react";
+import IssueName from "./IssueName";
+import IssueOverview from "./IssueOverview";
+import IssueDate from "./IssueDate";
 
 const WidgetClosed = () => {
   return (
     <div className = "flex flex-col gap-1">
-        <div className = "flex flex-row justify-between items-center">
-            <p className = "text-black/50 text-sm">DEN-11</p>
-            <div className = "p-2 rounded-4xl bg-gray-400"></div>
-        </div>
-        <div className = "flex flex-row items-center gap-1">
-            <Circle className = "w-4 h-4 text-blue-700"/>
-            <p className = "font-semibold text-black/70">Design Form</p>
-        </div>
+        <IssueName/>
+        <IssueOverview/>
         <div>
             <div className = "flex flex-row w-auto gap-1">
                 <div className = "flex items-center border border-gray-400/50 p-1 rounded-md w-auto">
@@ -24,9 +21,7 @@ const WidgetClosed = () => {
                 </div>
             </div>
         </div>
-        <div>
-            <p className = "text-xs text-black/40">Created Jan 30</p>
-        </div>
+        <IssueDate/>
     </div>
   )
 }

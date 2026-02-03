@@ -11,7 +11,7 @@ const Widget = () => {
     }
 
   return (
-    <div className = "bg-gray-200/20 w-sm px-2 py-4 rounded-md border border-gray-300 h-auto">
+    <div className = "bg-gray-200/20 w-sm px-2 rounded-md border border-gray-300 h-auto">
         <WidgetOpened/>
     </div>
   )
