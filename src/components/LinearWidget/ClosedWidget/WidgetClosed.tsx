@@ -13,7 +13,7 @@ const WidgetClosed = () => {
         </div>
         <div>
             <div className = "flex flex-row w-auto gap-1">
-                <div className = "border border-gray-400/50 p-1 rounded-md w-auto">
+                <div className = "flex items-center border border-gray-400/50 p-1 rounded-md w-auto">
                     <ChartNoAxesColumnIncreasing className ="text-gray-400 w-3 h-3"/>
                 </div>
                 <div>
