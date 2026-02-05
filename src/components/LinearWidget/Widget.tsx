@@ -16,7 +16,7 @@ const Widget = () => {
     <motion.div
     layout
     animate ={{height: 'auto'}}
-    transition = {{type: "spring", bounce: 0.2, stiffness: 300, damping: 20, duration: 0.3, mass: 1}}
+    transition = {{type: "spring", bounce: 0.2, stiffness: 250, damping: 20, duration: 0.3, mass: 1}}
     onClick={() => handleIsClosed()}
     className = "bg-gray-200/20 w-sm p-2 rounded-md border border-gray-300 h-auto overflow-hidden">
         <AnimatePresence
