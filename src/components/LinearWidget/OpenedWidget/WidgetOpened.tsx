@@ -7,9 +7,12 @@ import ActivityLog from './ActivityLog'
 const WidgetOpened = () => {
   return (
     <div className = "flex flex-col gap-1">
-      <div className = "border-b border-black/20 py-2">
+      <div className = "flex flex-row gap-2 border-b border-black/20 py-2">
         <IssueBadges
         title='Hi'
+        />
+        <IssueBadges
+        title='Hello'
         />
       </div>
         <div className = "flex flex-col gap-1 border-b border-black/20">
