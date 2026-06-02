@@ -1,3 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Add custom base styles with @layer if needed */
+/* @layer base {
+  body {
+    margin: 0;
+    font-family: Inter, sans-serif;
+  }
+} */
