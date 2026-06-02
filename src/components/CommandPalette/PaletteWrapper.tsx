@@ -71,7 +71,7 @@ const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>) => {
     <PaletteContext.Provider value = {
               contextValue
             }>
-    <div className ="flex flex-col w-full">
+    <div className ="flex flex-col w-full border border-gray-200 rounded-md">
         <div className = "w-full relative">
             <div className ="w-6 h-6 bg-gray-300 rounded-lg absolute top-3 left-2"></div>
             <input

@@ -44,7 +44,7 @@ const Widget = () => {
             key = "closed"
             initial = {{opacity: 0}}
             animate = {{opacity: 1}}
-            exit = {{opacity: 0, filter: "blur(10px)", y: -20}}
+            exit = {{opacity: 0, filter: "blur(10px)"}}
             transition = {{duration: 0.2, delay: 0.15}}
             >
               <WidgetClosed/>
@@ -54,7 +54,7 @@ const Widget = () => {
             key = "open"
             initial = {{opacity: 0}}
             animate = {{opacity: 1}}
-            exit = {{opacity: 0, filter: "blur(10px)", y:-20}}
+            exit = {{opacity: 0, filter: "blur(10px)"}}
             transition = {{duration: 0.2, delay: 0.15}}
             >
               <WidgetOpened/>

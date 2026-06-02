@@ -1,6 +1,7 @@
 ---
 import Palette from "./CommandPalette/PaletteWrapper";
 import Widget from "./LinearWidget/Widget";
+import DockMenu from "./DockMenu/DockWrapper"
 
 const images = {
 	Notion: "/notion.png",
@@ -14,5 +15,10 @@ const items = ["Notion", "Linear", "Claude", "Gmail", "Slack"]
 ---
 
 <div class = "flex justify-center w-2xl">
-	<Widget client:load/>
+	<!-- <Palette
+	filteredItems={items}
+	manifest={images}
+	client:load
+	/> -->
+	<DockMenu client:load/>
 </div>

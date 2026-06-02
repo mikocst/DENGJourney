@@ -8,7 +8,7 @@ const PaletteContent = () => {
 
 
   return (
-    <div className = "w-full bg-white p-4 flex flex-row gap-2 rounded-b-lg">
+    <div className = "w-full bg-gray-50 p-4 flex flex-row gap-2 rounded-b-lg">
         <div className = "w-full flex flex-col gap-2">
           {context?.filteredItems.map((item, index) => 
             <PaletteItem
