@@ -9,8 +9,14 @@ const DockWrapper = () => {
   const [isHover, setIsHover] = useState<boolean>(false);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
+  const handleClick = () => {
+        setIsExpanded(true);
+        setIsHover(false)
+  }
+  
+
   return (
-    <div className = "relative flex flex-col items-center w-48 gap-2 p-2"
+    <div className = "relative flex flex-col items-center w-full gap-2 p-2"
          onMouseEnter={() => setIsHover(true)}
          onMouseLeave={() => setIsHover(false)}
     >
@@ -21,7 +27,9 @@ const DockWrapper = () => {
                     animate = {{opacity: 1, y: -20}}
                     exit = {{opacity: 0, y:0}}
                     transition={{ease: 'easeOut', duration: 0.2}}
-                    className = "absolute top-0 p-1 cursor-pointer bg-gray-200/50 rounded-4xl">
+                    className = "absolute top-0 p-1 cursor-pointer bg-gray-200/50 rounded-4xl"
+                    onClick={handleClick}
+                    >
                         <ChevronUpCircle className='text-gray-400 size-4'/>
                     </motion.button>
                 )}

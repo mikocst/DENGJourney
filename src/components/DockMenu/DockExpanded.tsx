@@ -1,9 +1,41 @@
 import React from 'react'
+import DockNote from './DockNote'
+
+const mockNotes = [
+    {
+        title: 'test note 1',
+        content: 'I wrote in a note',
+        date: '06.02.26'
+    },
+    {
+        title: 'test note 2',
+        content: 'I wrote here',
+        date: '06.01.26'
+    },
+    {
+        title: 'test note 3',
+        content: 'Some text here',
+        date: '05.31.26'
+    }
+]
 
 const DockExpanded = () => {
   return (
-    <div>
-        
+    <div className = "flex flex-col w-full gap-2 p-2 rounded-lg shadow-md bg-gray-100/70">
+        <div className = "flex flex-row items-center justify-between">
+            <div className = "flex flex-col">
+                <p className = "font-semibold text-gray-500">Recent Notes</p>
+                <div className = "flex flex-col gap-1">
+                    {mockNotes.map((mockNote) => (
+                        <DockNote
+                        title= {mockNote.title}
+                        content = {mockNote.content}
+                        date = {mockNote.date}
+                        />
+                    ))}
+                </div>
+            </div>
+        </div>
     </div>
   )
 }
