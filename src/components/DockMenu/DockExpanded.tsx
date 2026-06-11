@@ -1,5 +1,6 @@
 import React from 'react'
 import DockNote from './DockNote'
+import DockKanban from './DockKanban'
 
 const mockNotes = [
     {
@@ -33,6 +34,9 @@ const DockExpanded = () => {
                         />
                     ))}
                 </div>
+            </div>
+            <div className = "flex-col p-2 border border-gray-300 rounded-xl bg-white/50">
+            
             </div>
         </div>
     </div>
