@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ChevronUpCircle} from 'lucide-react'
-import { motion, AnimatePresence, spring } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import DockMinimized from './DockMinimized'
 import DockExpanded from './DockExpanded'
 
@@ -38,7 +38,13 @@ const DockWrapper = () => {
                     </motion.button>
                 )}
             </AnimatePresence>
-        <div className = "w-full">
+        <motion.div
+        key = {isExpanded ? "expanded" : "minimized"}
+        animate  = {{filter: ["blur(0px)", "blur(5px)", "blur(0px)"], opacity: 0.8}}
+        initial = {false}
+        transition = {{duration: 0.3, ease: 'easeOut'}}
+        className = "w-full"
+        >
             <AnimatePresence>
                 {isExpanded ? (
                     <DockExpanded/>
@@ -46,7 +52,7 @@ const DockWrapper = () => {
                     <DockMinimized/>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     </motion.div>
   )
 }
