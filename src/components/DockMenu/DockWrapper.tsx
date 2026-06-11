@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ChevronUpCircle} from 'lucide-react'
-import { motion, AnimatePresence } from 'motion/react'
+import { motion, AnimatePresence, spring } from 'motion/react'
 import DockMinimized from './DockMinimized'
 import DockExpanded from './DockExpanded'
 
@@ -16,9 +16,13 @@ const DockWrapper = () => {
   
 
   return (
-    <div className = "relative flex flex-col items-center w-full gap-2 p-2"
+    <motion.div className = "relative flex flex-col items-center gap-2 p-2" 
+         layout
          onMouseEnter={() => setIsHover(true)}
          onMouseLeave={() => setIsHover(false)}
+         initial = {{width: '192px'}}
+         animate = {{width: `${isExpanded ? '800px' : '192px'}`}}
+         transition = {{type: 'spring', duration: .7, bounce: 0.2}}
     >
             <AnimatePresence>
                 {isHover && (
@@ -43,7 +47,7 @@ const DockWrapper = () => {
                 )}
             </AnimatePresence>
         </div>
-    </div>
+    </motion.div>
   )
 }
 

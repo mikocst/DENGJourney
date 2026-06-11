@@ -8,9 +8,14 @@ interface DockKanbanProps {
     createdAt: string
 }
 
-const DockKanban = () => {
+const DockKanban = ({title, priority, tag, project, createdAt}:DockKanbanProps) => {
   return (
-    <div>DockKanban</div>
+    <div>
+      <div className = "flex flex-col gap-1">
+          <p className = "text-gray-500">{project}</p>
+          {title}
+      </div>
+    </div>
   )
 }
 
