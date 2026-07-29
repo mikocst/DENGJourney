@@ -17,11 +17,25 @@ const SHADE_SIZE = 34
 const OUTER_SIZE = 32
 const INNER_RADIUS = 44
 const OUTER_RADIUS = 110
+// Distance from the wrapper's top edge to the flower's center point. Fixed,
+// so the sphere never moves as the wrapper's height animates open/closed.
+const ANCHOR_TOP = CENTER_SIZE / 2
+// Wrapper height when open: just enough to reach the lowest outer petal, so
+// the controls below sit right under the bloom instead of a full diameter down.
+const OPEN_HEIGHT = ANCHOR_TOP + OUTER_RADIUS + OUTER_SIZE / 2
 
 const petalOffset = (index: number, total: number, radius: number) => {
   const angle = (index / total) * Math.PI * 2 - Math.PI / 2
   return { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius }
 }
+
+/** Index of the ring stop closest in lightness to the live center — robust to HSL round-trip drift. */
+const closestLightnessIndex = (stops: string[], targetL: number) =>
+  stops.reduce((closest, hex, i) => {
+    const diff = Math.abs(hexToHsl(hex).l - targetL)
+    const closestDiff = Math.abs(hexToHsl(stops[closest]).l - targetL)
+    return diff < closestDiff ? i : closest
+  }, 0)
 
 interface PetalProps {
   hex: string
@@ -41,7 +55,7 @@ const Petal = ({ hex, size, x, y, delay, onClick, label }: PetalProps) => (
       width: size,
       height: size,
       left: '50%',
-      top: '50%',
+      top: ANCHOR_TOP,
       marginLeft: -size / 2,
       marginTop: -size / 2,
       backgroundColor: hex,
@@ -62,9 +76,10 @@ const ColorPicker = () => {
   const [hue, setHue] = useState(initialHsl.h)
   const [sat, setSat] = useState(initialHsl.s)
   const [lightness, setLightness] = useState(initialHsl.l)
-  // The color the shade ring is generated from. Only updates on a committed
-  // pick (petal/swatch click, slider release, hex commit) — not on every
-  // slider drag tick — so the ring doesn't reshuffle while dragging.
+  // The color the shade ring is generated from. Only updates when a genuinely
+  // new color is committed (outer swatch, slider release, hex commit) — not
+  // on a shade-petal click, and not on every slider drag tick — so picking an
+  // existing shade never reshuffles or remounts the ring.
   const [ringAnchor, setRingAnchor] = useState(INITIAL_COLOR)
   const [isOpen, setIsOpen] = useState(false)
   const [hexDraft, setHexDraft] = useState(INITIAL_COLOR)
@@ -72,8 +87,11 @@ const ColorPicker = () => {
   const [copied, setCopied] = useState(false)
 
   const center = hslToHex({ h: hue, s: sat, l: lightness })
-  const shadeStops = generateShadeRing(ringAnchor).filter((hex) => hex !== center)
   const containerSize = OUTER_RADIUS * 2 + OUTER_SIZE
+
+  const ringStops = generateShadeRing(ringAnchor)
+  const hiddenIndex = closestLightnessIndex(ringStops, hexToHsl(center).l)
+  const shadeStops = ringStops.filter((_, i) => i !== hiddenIndex)
 
   // Mirror the committed color into the hex field, but only while the user
   // isn't actively typing in it.
@@ -87,11 +105,14 @@ const ColorPicker = () => {
     setLightness(l)
   }
 
+  // Ring keys include ringAnchor, so this only reassigns the same 7 mounted
+  // petals' colors (instant, no remount) instead of triggering flight.
   const handleShadeClick = (hex: string) => {
     setLightness(hexToHsl(hex).l)
-    setRingAnchor(hex)
   }
 
+  // These three all change ringAnchor, which changes every ring petal's key
+  // at once — a full remount, so the flight animation plays as intended.
   const handleSwatchClick = (swatch: OuterSwatch) => {
     applyHsl(swatch.h, swatch.s, swatch.l)
     setRingAnchor(swatch.hex)
@@ -123,7 +144,12 @@ const ColorPicker = () => {
 
   return (
     <div className="flex flex-col items-center gap-2 select-none">
-      <div className="relative" style={{ width: containerSize, height: containerSize }}>
+      <motion.div
+        className="relative"
+        style={{ width: containerSize }}
+        animate={{ height: isOpen ? OPEN_HEIGHT : CENTER_SIZE }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+      >
         <AnimatePresence>
           {isOpen &&
             OUTER_SWATCHES.map((swatch, i) => {
@@ -149,7 +175,7 @@ const ColorPicker = () => {
               const { x, y } = petalOffset(i, shadeStops.length, INNER_RADIUS)
               return (
                 <Petal
-                  key={hex}
+                  key={`${ringAnchor}-${i}`}
                   hex={hex}
                   size={SHADE_SIZE}
                   x={x}
@@ -169,7 +195,7 @@ const ColorPicker = () => {
             width: CENTER_SIZE,
             height: CENTER_SIZE,
             left: '50%',
-            top: '50%',
+            top: ANCHOR_TOP,
             marginLeft: -CENTER_SIZE / 2,
             marginTop: -CENTER_SIZE / 2,
           }}
@@ -181,7 +207,7 @@ const ColorPicker = () => {
           onClick={() => setIsOpen((prev) => !prev)}
           aria-label={isOpen ? 'Collapse color picker' : 'Expand color picker'}
         />
-      </div>
+      </motion.div>
 
       <input
         type="range"
