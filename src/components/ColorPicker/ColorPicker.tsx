@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ChangeEvent } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import Icon from '../Icon'
 import {
@@ -23,6 +23,8 @@ const ANCHOR_TOP = CENTER_SIZE / 2
 // Wrapper height when open: just enough to reach the lowest outer petal, so
 // the controls below sit right under the bloom instead of a full diameter down.
 const OPEN_HEIGHT = ANCHOR_TOP + OUTER_RADIUS + OUTER_SIZE / 2
+
+const MotionInput = motion.create('input')
 
 const petalOffset = (index: number, total: number, radius: number) => {
   const angle = (index / total) * Math.PI * 2 - Math.PI / 2
@@ -209,16 +211,17 @@ const ColorPicker = () => {
         />
       </motion.div>
 
-      <input
+      <MotionInput
         type="range"
         min={6}
         max={94}
         value={lightness}
-        onChange={(e) => setLightness(Number(e.target.value))}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setLightness(Number(e.target.value))}
         onPointerUp={commitSliderAnchor}
         onKeyUp={commitSliderAnchor}
+        whileHover={{ scale: 1.1, transition: { duration: 0.15, ease: 'easeOut' } }}
         style={{ accentColor: center }}
-        className="w-40 cursor-pointer"
+        className="w-40 cursor-grab active:cursor-grabbing"
         aria-label="Shade lightness"
       />
 
