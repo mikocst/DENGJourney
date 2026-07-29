@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronUpCircle} from 'lucide-react'
+import Icon from '../Icon'
 import { motion, AnimatePresence } from 'motion/react'
 import DockMinimized from './DockMinimized'
 import DockExpanded from './DockExpanded'
@@ -34,7 +34,7 @@ const DockWrapper = () => {
                     className = "absolute top-0 p-1 cursor-pointer bg-gray-200/50 rounded-4xl"
                     onClick={handleClick}
                     >
-                        <ChevronUpCircle className='text-gray-400 size-4'/>
+                        <Icon name='chevron-up' className='text-gray-400 size-4'/>
                     </motion.button>
                 )}
             </AnimatePresence>

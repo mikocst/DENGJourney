@@ -1,5 +1,5 @@
 import React from 'react'
-import { ClockArrowDown, Clock4, } from 'lucide-react'
+import Icon from '../Icon'
 
 interface DockKanbanProps {
     title: string
@@ -17,7 +17,7 @@ const DockKanban = ({title, priority, tag, project, createdAt}:DockKanbanProps) 
       </div>
       <div className = "flex flex-row">
           <div className = "p-1 border border-gray-200">
-              <ClockArrowDown size ={'16px'} className = "text-red-400"/>
+              <Icon name='clock' size={'16px'} className = "text-red-400"/>
             </div>
           <div className = "p-1 border border-gray-200">
               <p>{project}</p>
